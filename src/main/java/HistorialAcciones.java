@@ -7,6 +7,9 @@ public class HistorialAcciones {
     private final Deque<Accion> pila = new ArrayDeque<>();
 
     public void registrarAccion(Accion accion) {
+        if (accion == null) {
+            throw new IllegalArgumentException("Acción inválida (null).");
+        }
         pila.push(accion);
     }
 

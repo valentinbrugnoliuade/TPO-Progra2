@@ -28,11 +28,19 @@ Checklist para dividir el trabajo en equipo.
   - [ ] Integrar esto al flujo real del sistema (que se use desde un “Sistema”/`Main`)
 
 ## Persistencia con JSON
+<<<<<<< Updated upstream
 - [ ] **Modelo del JSON**:
   - [ ] Definir mapeo de `clientes[]` con `nombre`, `scoring`, `siguiendo[]`, `conexiones[]`
   - [ ] Decidir si `siguiendo` y `conexiones` se cargan en iteración 1 o se deja preparado
 
 - [ ] **Lector/cargador JSON**:
+=======
+- [WIP] **Modelo del JSON**:
+  - [ ] Definir mapeo de `clientes[]` con `nombre`, `scoring`, `siguiendo[]`, `conexiones[]`
+  - [ ] Decidir si `siguiendo` y `conexiones` se cargan en iteración 1 o se deja preparado
+
+- [WIP] **Lector/cargador JSON**:
+>>>>>>> Stashed changes
   - [ ] Leer archivo JSON desde ruta
   - [ ] Crear clientes y cargarlos en estructuras
   - [ ] (Si corresponde) Construir relaciones (`siguiendo`, `conexiones`)
@@ -81,3 +89,35 @@ Checklist para dividir el trabajo en equipo.
 - **Persona A**: JSON (modelo + lector + validaciones) + JSONs de prueba.
 - **Persona B**: integración (Sistema/Main) + tests de estructuras + README.
 
+<<<<<<< Updated upstream
+=======
+
+
+Listo, aplicado en RepositorioClientes:
+Nombre con espacios / casing: la clave ahora usa trim() + toLowerCase(Locale.ROOT).
+nombre == null o vacío:
+existeCliente(null/blank) → false
+buscarPorNombre(null/blank) → null
+eliminarCliente(null/blank) → false
+(ya no hay NullPointerException)
+agregarCliente(null): ahora tira IllegalArgumentException.
+Eliminar inexistente: sigue devolviendo false.
+Scoring inexistente: sigue devolviendo Collections.emptySet().
+Mutabilidad externa: buscarPorScoring devuelve Collections.unmodifiableSet(...) cuando existe, para que no puedan modificar el set desde afuera y romper invariantes.
+
+
+En HistorialAcciones
+Registrar accion == null: hoy permite push(null) y eso después puede explotar (borde importante).
+Deshacer con historial vacío: devuelve null (ya lo hace).
+
+
+En GestorSolicitudes
+Encolar solicitud == null: hoy permite addLast(null) (borde).
+Procesar con cola vacía: devuelve null (ya lo hace).
+
+
+En SolicitudSeguimiento
+Solicitante == objetivo (auto-seguimiento): hoy lo permite; decidir si es válido o no.
+Duplicadas: mismas (solicitante, objetivo) repetidas muchas veces (¿se permite?).
+Si querés, te digo cuáles de estos conviene testear sí o sí para la iteración 1 y cuáles dejar “para más adelante”.
+>>>>>>> Stashed changes
