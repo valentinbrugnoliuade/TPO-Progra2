@@ -1,28 +1,44 @@
-import java.util.ArrayDeque;
-import java.util.Deque;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
+
+import TDAs.deque.DequeImpl;
+import TDAs.deque.DequeTda;
 
 public class HistorialAcciones {
-    private final Deque<Accion> pila = new ArrayDeque<>();
+    private final DequeTda<Accion> pila;
+
+    public HistorialAcciones() {
+        pila = new DequeImpl<>();
+        pila.crearDeque();
+    }
 
     public void registrarAccion(Accion accion) {
         if (accion == null) {
             throw new IllegalArgumentException("Acción inválida (null).");
         }
-        pila.push(accion);
+        pila.agregarInicio(accion);  // LIFO: push = agregar al inicio
     }
 
     public Accion deshacerUltimaAccion() {
-        if (pila.isEmpty()) return null;
-        return pila.pop();
+        return pila.eliminarInicio();  // pop = eliminar del inicio
     }
 
     public boolean estaVacio() {
-        return pila.isEmpty();
+        return pila.estaVacio();
     }
 
     public List<Accion> listarAcciones() {
-        return pila.stream().collect(Collectors.toList());
+        List<Accion> lista = new ArrayList<>();
+        DequeTda<Accion> aux = new DequeImpl<>();
+        aux.crearDeque();
+        while (!pila.estaVacio()) {
+            Accion a = pila.eliminarInicio();
+            lista.add(a);
+            aux.agregarInicio(a);
+        }
+        while (!aux.estaVacio()) {
+            pila.agregarInicio(aux.eliminarInicio());
+        }
+        return lista;
     }
 }

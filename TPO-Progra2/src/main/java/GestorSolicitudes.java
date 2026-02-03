@@ -1,26 +1,30 @@
-import java.util.ArrayDeque;
-import java.util.Deque;
+import TDAs.cola.ColaImpl;
+import TDAs.cola.ColaTda;
 
 public class GestorSolicitudes {
-    private final Deque<SolicitudSeguimiento> cola = new ArrayDeque<>();
+    private final ColaTda<SolicitudSeguimiento> cola;
+
+    public GestorSolicitudes() {
+        cola = new ColaImpl<>();
+        cola.crearCola();
+    }
 
     public void encolar(SolicitudSeguimiento solicitud) {
         if (solicitud == null) {
             throw new IllegalArgumentException("Solicitud inválida (null).");
         }
-        cola.addLast(solicitud);
+        cola.encolar(solicitud);
     }
 
     public SolicitudSeguimiento procesarSiguiente() {
-        if (cola.isEmpty()) return null;
-        return cola.removeFirst();
+        return cola.desencolar();
     }
 
     public boolean estaVacia() {
-        return cola.isEmpty();
+        return cola.esVacia();
     }
 
     public int cantidadPendientes() {
-        return cola.size();
+        return cola.tamaño();
     }
 }

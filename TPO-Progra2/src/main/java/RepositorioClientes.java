@@ -1,17 +1,22 @@
-import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
-import java.util.Map;
-import java.util.NavigableMap;
-import java.util.Set;
-import java.util.TreeMap;
+
+import TDAs.conjunto.ConjuntoImpl;
+import TDAs.conjunto.ConjuntoTda;
+import TDAs.diccionario.DiccionarioImpl;
+import TDAs.diccionario.DiccionarioTda;
 
 public class RepositorioClientes {
-    private final Map<String, Cliente> porNombre = new HashMap<>();
-    private final NavigableMap<Integer, Set<Cliente>> porScoring = new TreeMap<>();
+    private final DiccionarioTda<String, Cliente> porNombre;
+    private final DiccionarioTda<Integer, ConjuntoTda<Cliente>> porScoring;
+
+    public RepositorioClientes() {
+        porNombre = new DiccionarioImpl<>();
+        porNombre.crearDiccionario();
+        porScoring = new DiccionarioImpl<>();
+        porScoring.crearDiccionario();
+    }
 
     private String keyNombre(String nombre) {
         if (nombre == null) return null;
@@ -22,7 +27,7 @@ public class RepositorioClientes {
     public boolean existeCliente(String nombre) {
         String key = keyNombre(nombre);
         if (key == null) return false;
-        return porNombre.containsKey(key);
+        return porNombre.contiene(key);
     }
 
     public void agregarCliente(Cliente cliente) {
@@ -33,47 +38,56 @@ public class RepositorioClientes {
         if (key == null) {
             throw new IllegalArgumentException("Nombre de cliente inválido.");
         }
-        if (porNombre.containsKey(key)) {
+        if (porNombre.contiene(key)) {
             throw new IllegalArgumentException("Ya existe el cliente: " + cliente.getNombre());
         }
 
-        porNombre.put(key, cliente);
-        porScoring.computeIfAbsent(cliente.getScoring(), k -> new HashSet<>()).add(cliente);
+        porNombre.insertar(key, cliente);
+        ConjuntoTda<Cliente> conjunto = porScoring.obtener(cliente.getScoring());
+        if (conjunto == null) {
+            conjunto = new ConjuntoImpl<>();
+            conjunto.crearConjunto();
+            porScoring.insertar(cliente.getScoring(), conjunto);
+        }
+        conjunto.agregar(cliente);
     }
 
     public Cliente buscarPorNombre(String nombre) {
         String key = keyNombre(nombre);
         if (key == null) return null;
-        return porNombre.get(key);
+        return porNombre.obtener(key);
     }
 
-    public Set<Cliente> buscarPorScoring(int scoring) {
-        Set<Cliente> set = porScoring.get(scoring);
-        if (set == null) return Collections.emptySet();
-        return Collections.unmodifiableSet(set);
+    public List<Cliente> buscarPorScoring(int scoring) {
+        ConjuntoTda<Cliente> conjunto = porScoring.obtener(scoring);
+        if (conjunto == null || conjunto.estaVacio()) {
+            return Collections.emptyList();
+        }
+        return Collections.unmodifiableList(conjunto.listar());
     }
 
     public boolean eliminarCliente(String nombre) {
         String key = keyNombre(nombre);
         if (key == null) return false;
-        Cliente eliminado = porNombre.remove(key);
+        Cliente eliminado = porNombre.obtener(key);
         if (eliminado == null) return false;
 
-        Set<Cliente> set = porScoring.get(eliminado.getScoring());
-        if (set != null) {
-            set.remove(eliminado);
-            if (set.isEmpty()) {
-                porScoring.remove(eliminado.getScoring());
+        porNombre.eliminar(key);
+        ConjuntoTda<Cliente> conjunto = porScoring.obtener(eliminado.getScoring());
+        if (conjunto != null) {
+            conjunto.eliminar(eliminado);
+            if (conjunto.estaVacio()) {
+                porScoring.eliminar(eliminado.getScoring());
             }
         }
         return true;
     }
 
     public List<Cliente> listarTodos() {
-        return new ArrayList<>(porNombre.values());
+        return porNombre.valores();
     }
 
     public int cantidadClientes() {
-        return porNombre.size();
+        return porNombre.tamaño();
     }
 }
