@@ -1,11 +1,7 @@
 package TDAs.conjunto;
 
 import TDAs.lista.ListaTda;
-
-/**
- * TAD Conjunto (dinámico) — Interfaz.
- * Sin elementos repetidos.
- */
+// Interfaz de conjunto sin repetidos.
 public interface ConjuntoTda<T> {
 
     void crearConjunto();
@@ -20,6 +16,5 @@ public interface ConjuntoTda<T> {
 
     int tamaño();
 
-    /** Devuelve los elementos como lista (para iterar/consultar). */
     ListaTda<T> listar();
 }

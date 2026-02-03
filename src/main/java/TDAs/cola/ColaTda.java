@@ -1,9 +1,5 @@
 package TDAs.cola;
-
-/**
- * TAD Cola (FIFO) — Interfaz.
- * Operaciones: encolar al final, desencolar del inicio.
- */
+// Interfaz de cola FIFO.
 public interface ColaTda<T> {
 
     void crearCola();

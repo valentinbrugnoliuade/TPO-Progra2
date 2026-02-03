@@ -7,10 +7,7 @@ import TDAs.conjunto.ConjuntoImpl;
 import TDAs.conjunto.ConjuntoTda;
 import TDAs.lista.ListaImpl;
 import TDAs.lista.ListaTda;
-
-/**
- * Implementación de DiccionarioTda (simple) usando HashMap.
- */
+// Implementación con HashMap.
 public class DiccionarioImpl<K, V> implements DiccionarioTda<K, V> {
 
     private Map<K, V> elementos;

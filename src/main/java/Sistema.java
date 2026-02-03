@@ -1,26 +1,12 @@
 import TDAs.lista.ListaTda;
-
-/**
- * Fachada del sistema (Iteración 1).
- *
- * Abstracción: provee operaciones de alto nivel para gestionar clientes, registrar/deshacer acciones
- * y procesar solicitudes de seguimiento, delegando en las estructuras internas eficientes.
- *
- * Representación:
- * - repositorio: RepositorioClientes
- * - historial: HistorialAcciones
- * - solicitudes: GestorSolicitudes
- *
- * Invariante:
- * - repositorio, historial y solicitudes no son null
- */
+// Fachada del sistema.
 public class Sistema {
     private final RepositorioClientes repositorio = new RepositorioClientes();
     private final HistorialAcciones historial = new HistorialAcciones();
     private final GestorSolicitudes solicitudes = new GestorSolicitudes();
 
     // -------- Clientes --------
-
+    
     public boolean existeCliente(String nombre) {
         return repositorio.existeCliente(nombre);
     }
@@ -59,8 +45,6 @@ public class Sistema {
     // -------- Acciones --------
 
     public Accion deshacerUltimaAccion() {
-        // En iteración 1 devolvemos la acción para que el caller decida si revierte efectos.
-        // Si quieren revertir automáticamente, hay que guardar más info (por ejemplo el Cliente completo al eliminar).
         return historial.deshacerUltimaAccion();
     }
 

@@ -1,8 +1,5 @@
 package TDAs.lista;
-
-/**
- * TAD Lista — Interfaz.
- */
+// Interfaz de lista.
 public interface ListaTda<T> {
 
     void crearLista();

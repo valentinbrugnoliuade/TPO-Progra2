@@ -1,13 +1,5 @@
 package TDAs.deque;
-
-/**
- * TAD Deque (cola de doble extremo) — Interfaz.
- * Operaciones según especificación:
- * - agregarInicio / agregarFinal
- * - eliminarInicio / eliminarFinal
- * - verInicio / verFinal
- * - estaVacio / tamaño
- */
+// Interfaz de deque doble extremo.
 public interface DequeTda<T> {
 
     void crearDeque();

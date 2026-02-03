@@ -2,10 +2,7 @@ package TDAs.cola;
 
 import java.util.ArrayDeque;
 import java.util.Deque;
-
-/**
- * Implementación de ColaTda usando ArrayDeque como estructura interna.
- */
+// Implementación con ArrayDeque.
 public class ColaImpl<T> implements ColaTda<T> {
 
     private Deque<T> elementos;

@@ -1,11 +1,10 @@
+// Punto de entrada de demo.
 public class Main {
     public static void main(String[] args) {
-        // Interfaz mínima (demo) para Iteración 1.
         Sistema sistema = new Sistema();
 
         System.out.println("=== Demo Iteración 1 ===");
 
-        // Alta + normalización (espacios / mayúsculas)
         sistema.agregarCliente("  Alice   ", 95);
         sistema.agregarCliente("bob", 88);
 

@@ -1,10 +1,7 @@
 package TDAs.lista;
 
 import java.util.ArrayList;
-
-/**
- * Implementación de ListaTda usando ArrayList.
- */
+// Implementación con ArrayList.
 public class ListaImpl<T> implements ListaTda<T> {
 
     private ArrayList<T> elementos;

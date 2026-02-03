@@ -2,11 +2,7 @@ package TDAs.diccionario;
 
 import TDAs.conjunto.ConjuntoTda;
 import TDAs.lista.ListaTda;
-
-/**
- * TAD Diccionario (simple) — Interfaz.
- * Un par (clave, valor) por clave. Si la clave existe, insertar actualiza el valor.
- */
+// Interfaz de diccionario clave-valor.
 public interface DiccionarioTda<K, V> {
 
     void crearDiccionario();

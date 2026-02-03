@@ -2,10 +2,7 @@ package TDAs.deque;
 
 import java.util.ArrayDeque;
 import java.util.Deque;
-
-/**
- * Implementación de DequeTda usando ArrayDeque como estructura interna.
- */
+// Implementación con ArrayDeque.
 public class DequeImpl<T> implements DequeTda<T> {
 
     private Deque<T> elementos;

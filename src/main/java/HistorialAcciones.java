@@ -3,6 +3,7 @@ import TDAs.deque.DequeTda;
 import TDAs.lista.ListaImpl;
 import TDAs.lista.ListaTda;
 
+// Historial LIFO de acciones.
 public class HistorialAcciones {
     private final DequeTda<Accion> pila;
 
@@ -15,11 +16,11 @@ public class HistorialAcciones {
         if (accion == null) {
             throw new IllegalArgumentException("Acción inválida (null).");
         }
-        pila.agregarInicio(accion);  // LIFO: push = agregar al inicio
+        pila.agregarInicio(accion);
     }
 
     public Accion deshacerUltimaAccion() {
-        return pila.eliminarInicio();  // pop = eliminar del inicio
+        return pila.eliminarInicio();
     }
 
     public boolean estaVacio() {
