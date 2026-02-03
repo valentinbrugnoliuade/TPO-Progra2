@@ -1,4 +1,4 @@
-import java.util.List;
+import TDAs.lista.ListaTda;
 
 /**
  * Fachada del sistema (Iteración 1).
@@ -44,11 +44,11 @@ public class Sistema {
         return repositorio.buscarPorNombre(nombre);
     }
 
-    public List<Cliente> buscarClientesPorScoring(int scoring) {
+    public ListaTda<Cliente> buscarClientesPorScoring(int scoring) {
         return repositorio.buscarPorScoring(scoring);
     }
 
-    public List<Cliente> listarClientes() {
+    public ListaTda<Cliente> listarClientes() {
         return repositorio.listarTodos();
     }
 
@@ -64,7 +64,7 @@ public class Sistema {
         return historial.deshacerUltimaAccion();
     }
 
-    public List<Accion> listarAcciones() {
+    public ListaTda<Accion> listarAcciones() {
         return historial.listarAcciones();
     }
 

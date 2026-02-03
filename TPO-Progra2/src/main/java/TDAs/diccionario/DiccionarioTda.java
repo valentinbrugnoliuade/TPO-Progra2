@@ -1,8 +1,7 @@
 package TDAs.diccionario;
 
-import java.util.List;
-
 import TDAs.conjunto.ConjuntoTda;
+import TDAs.lista.ListaTda;
 
 /**
  * TAD Diccionario (simple) — Interfaz.
@@ -24,5 +23,5 @@ public interface DiccionarioTda<K, V> {
 
     ConjuntoTda<K> claves();
 
-    List<V> valores();
+    ListaTda<V> valores();
 }

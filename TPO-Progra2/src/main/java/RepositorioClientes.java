@@ -1,11 +1,11 @@
-import java.util.Collections;
-import java.util.List;
 import java.util.Locale;
 
 import TDAs.conjunto.ConjuntoImpl;
 import TDAs.conjunto.ConjuntoTda;
 import TDAs.diccionario.DiccionarioImpl;
 import TDAs.diccionario.DiccionarioTda;
+import TDAs.lista.ListaImpl;
+import TDAs.lista.ListaTda;
 
 public class RepositorioClientes {
     private final DiccionarioTda<String, Cliente> porNombre;
@@ -58,12 +58,14 @@ public class RepositorioClientes {
         return porNombre.obtener(key);
     }
 
-    public List<Cliente> buscarPorScoring(int scoring) {
+    public ListaTda<Cliente> buscarPorScoring(int scoring) {
         ConjuntoTda<Cliente> conjunto = porScoring.obtener(scoring);
         if (conjunto == null || conjunto.estaVacio()) {
-            return Collections.emptyList();
+            ListaTda<Cliente> vacia = new ListaImpl<>();
+            vacia.crearLista();
+            return vacia;
         }
-        return Collections.unmodifiableList(conjunto.listar());
+        return conjunto.listar();
     }
 
     public boolean eliminarCliente(String nombre) {
@@ -83,7 +85,7 @@ public class RepositorioClientes {
         return true;
     }
 
-    public List<Cliente> listarTodos() {
+    public ListaTda<Cliente> listarTodos() {
         return porNombre.valores();
     }
 

@@ -1,9 +1,10 @@
 package TDAs.conjunto;
 
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
+
+import TDAs.lista.ListaImpl;
+import TDAs.lista.ListaTda;
 
 /**
  * Implementación de ConjuntoTda (dinámico) usando HashSet.
@@ -48,7 +49,14 @@ public class ConjuntoImpl<T> implements ConjuntoTda<T> {
     }
 
     @Override
-    public List<T> listar() {
-        return elementos == null ? new ArrayList<>() : new ArrayList<>(elementos);
+    public ListaTda<T> listar() {
+        ListaTda<T> lista = new ListaImpl<>();
+        lista.crearLista();
+        if (elementos != null) {
+            for (T e : elementos) {
+                lista.insertar(lista.longitud(), e);
+            }
+        }
+        return lista;
     }
 }

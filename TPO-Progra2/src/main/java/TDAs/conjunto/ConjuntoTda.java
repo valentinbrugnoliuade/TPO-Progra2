@@ -1,6 +1,6 @@
 package TDAs.conjunto;
 
-import java.util.List;
+import TDAs.lista.ListaTda;
 
 /**
  * TAD Conjunto (dinámico) — Interfaz.
@@ -21,5 +21,5 @@ public interface ConjuntoTda<T> {
     int tamaño();
 
     /** Devuelve los elementos como lista (para iterar/consultar). */
-    List<T> listar();
+    ListaTda<T> listar();
 }

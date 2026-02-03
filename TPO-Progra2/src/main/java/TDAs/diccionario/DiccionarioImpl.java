@@ -1,12 +1,12 @@
 package TDAs.diccionario;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import TDAs.conjunto.ConjuntoImpl;
 import TDAs.conjunto.ConjuntoTda;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import TDAs.lista.ListaImpl;
+import TDAs.lista.ListaTda;
 
 /**
  * Implementación de DiccionarioTda (simple) usando HashMap.
@@ -63,7 +63,14 @@ public class DiccionarioImpl<K, V> implements DiccionarioTda<K, V> {
     }
 
     @Override
-    public List<V> valores() {
-        return elementos == null ? new ArrayList<>() : new ArrayList<>(elementos.values());
+    public ListaTda<V> valores() {
+        ListaTda<V> lista = new ListaImpl<>();
+        lista.crearLista();
+        if (elementos != null) {
+            for (V v : elementos.values()) {
+                lista.insertar(lista.longitud(), v);
+            }
+        }
+        return lista;
     }
 }
