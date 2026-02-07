@@ -1,3 +1,6 @@
+import java.util.ArrayList;
+import java.util.Scanner;
+
 // Punto de entrada de demo.
 public class Main {
     public static void main(String[] args) {
@@ -25,5 +28,47 @@ public class Main {
 
         System.out.println("Acciones registradas: " + sistema.listarAcciones());
         System.out.println("Deshacer última acción (devuelve detalle): " + sistema.deshacerUltimaAccion());
+
+        Scanner sc = new Scanner(System.in);
+        GestorJSON gestor = new GestorJSON();
+
+        //Leer el JSON de resource (base)
+        ClientesData data = gestor.leerResource();
+        for (Cliente c : data.getClientes()) {
+            System.out.println(c);
+        }
+        // Asegura que la lista exista
+        if (data.getClientes() == null) {
+            data.setClientes(new ArrayList<>());
+        }
+
+        //Se le pide los datos manualmente y se agregan
+        Cliente nuevo = new Cliente();
+
+        System.out.println("Nombre: ");
+        String nombre = sc.nextLine();
+        nuevo.setNombre(nombre);
+
+        System.out.println("Scoring: ");
+        int scoring = Integer.parseInt(sc.nextLine());
+        nuevo.setScoring(scoring);
+
+        System.out.print("Sigue a: ");
+        String siguiendo = sc.nextLine();
+        nuevo.setSiguiendo(new String[]{siguiendo});
+
+        System.out.print("Conectado con: ");
+        String conexion = sc.nextLine();
+        nuevo.setConexiones(new String[]{conexion});
+
+        data.getClientes().add(nuevo);
+        gestor.guardar(data);
+
+        //Lee el nuevo archivo guardado clientes_out.json
+        ClientesData archivoNuevo = gestor.leerArchivo("clientes_out.json");
+
+        for (Cliente c : archivoNuevo.getClientes()) {
+            System.out.println(c);
+        }
     }
 }

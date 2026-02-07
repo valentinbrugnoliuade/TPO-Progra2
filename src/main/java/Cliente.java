@@ -1,9 +1,12 @@
 import java.util.Objects;
 
 public class Cliente {
-    private final String nombre;
-    private final int scoring;
+    private String nombre;
+    private int scoring;
+    private String[] siguiendo;
+    private String[] conexiones;
 
+    public Cliente(){}
     public Cliente(String nombre, int scoring) {
         if (nombre == null || nombre.isBlank()) {
             throw new IllegalArgumentException("El nombre no puede estar vacío.");
@@ -20,6 +23,21 @@ public class Cliente {
         return scoring;
     }
 
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public void setScoring(int scoring) {
+        this.scoring = scoring;
+    }
+
+    public void setSiguiendo(String[] siguiendo) {
+        this.siguiendo = siguiendo;
+    }
+
+    public void setConexiones(String[] conexiones) {
+        this.conexiones = conexiones;
+    }
     @Override
     public String toString() {
         return "Cliente{" +

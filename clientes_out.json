@@ -1,0 +1,38 @@
+{
+  "Clientes": [
+    {
+      "nombre": "Alice",
+      "scoring": 95,
+      "siguiendo": [
+        "Bob",
+        "Charlie"
+      ],
+      "conexiones": [
+        "Bob",
+        "Charlie",
+        "David"
+      ]
+    },
+    {
+      "nombre": "Bob",
+      "scoring": 80,
+      "siguiendo": [
+        "Alice"
+      ],
+      "conexiones": [
+        "Alice",
+        "Charlie"
+      ]
+    },
+    {
+      "nombre": "R",
+      "scoring": 30,
+      "siguiendo": [
+        "L"
+      ],
+      "conexiones": [
+        "M"
+      ]
+    }
+  ]
+}
