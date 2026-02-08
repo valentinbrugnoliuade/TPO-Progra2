@@ -1,7 +1,13 @@
 package TDAs.lista;
 
 import java.util.ArrayList;
-// Implementación con ArrayList.
+
+/**
+ * Implementación de lista con ArrayList.
+ * - Acceso por índice: O(1)
+ * - Inserción/eliminación: O(n) en el peor caso
+ * - Búsqueda: O(n)
+ */
 public class ListaImpl<T> implements ListaTda<T> {
 
     private ArrayList<T> elementos;

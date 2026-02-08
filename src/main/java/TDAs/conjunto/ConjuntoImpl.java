@@ -5,7 +5,12 @@ import java.util.Set;
 
 import TDAs.lista.ListaImpl;
 import TDAs.lista.ListaTda;
-// Implementación con HashSet.
+
+/**
+ * Implementación de conjunto con HashSet.
+ * - Agregar/Eliminar/Buscar: O(1) promedio
+ * - Listar: O(n)
+ */
 public class ConjuntoImpl<T> implements ConjuntoTda<T> {
 
     private Set<T> elementos;

@@ -2,7 +2,11 @@ package TDAs.deque;
 
 import java.util.ArrayDeque;
 import java.util.Deque;
-// Implementación con ArrayDeque.
+
+/**
+ * Implementación de deque con ArrayDeque.
+ * Todas las operaciones son O(1) o O(1) amortizado.
+ */
 public class DequeImpl<T> implements DequeTda<T> {
 
     private Deque<T> elementos;

@@ -1,3 +1,6 @@
+/**
+ * Enumeración de tipos de acciones del sistema.
+ */
 public enum TipoAccion {
     AGREGAR_CLIENTE,
     ELIMINAR_CLIENTE,

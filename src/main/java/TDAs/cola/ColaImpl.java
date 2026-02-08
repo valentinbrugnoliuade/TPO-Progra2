@@ -2,7 +2,11 @@ package TDAs.cola;
 
 import java.util.ArrayDeque;
 import java.util.Deque;
-// Implementación con ArrayDeque.
+
+/**
+ * Implementación de cola con ArrayDeque.
+ * Todas las operaciones son O(1) o O(1) amortizado.
+ */
 public class ColaImpl<T> implements ColaTda<T> {
 
     private Deque<T> elementos;
