@@ -4,13 +4,19 @@
       "nombre": "Alice",
       "scoring": 95,
       "siguiendo": ["Bob", "Charlie"],
-      "conexiones": ["Bob", "Charlie", "David"]
+      "conexiones": ["Bob", "Charlie"]
     },
     {
       "nombre": "Bob",
       "scoring": 80,
       "siguiendo": ["Alice"],
       "conexiones": ["Alice", "Charlie"]
+    },
+    {
+      "nombre": "Charlie",
+      "scoring": 80,
+      "siguiendo": ["Alice", "Bob"],
+      "conexiones": ["Alice"]
     }
   ]
 }
