@@ -152,6 +152,27 @@ public class SistemaTest {
         SolicitudSeguimiento s2 = sistema.procesarSiguienteSolicitud();
         assertEquals("Charlie", s2.getSolicitante(), "Debe procesar Charlie después");
     }
+
+    @Test
+    @DisplayName("Cliente TDA: cola de solicitudes y pila de acciones por cliente")
+    public void testClienteTdaEstructurasInternas() {
+        sistema.agregarCliente("Alice", 95);
+        sistema.agregarCliente("Bob", 88);
+
+        Cliente alice = sistema.buscarClientePorId(1);
+        assertNotNull(alice, "Alice debe existir");
+
+        // Acción del alta registrada en el cliente
+        assertTrue(alice.listarAcciones().longitud() >= 1, "Alice debe tener acciones registradas");
+
+        // Solicitud: se encola global y también en la cola del cliente (por nombre)
+        sistema.solicitarSeguimiento("Alice", "Bob");
+        assertEquals(1, alice.cantidadSolicitudesPendientes(), "Alice debe tener 1 solicitud pendiente en su cola");
+
+        // Al procesar, se desencola global y también se mantiene la cola del cliente consistente
+        sistema.procesarSiguienteSolicitud();
+        assertEquals(0, alice.cantidadSolicitudesPendientes(), "La cola de Alice debe quedar vacía tras procesar");
+    }
     
     // ========== Tests de Casos Borde ==========
     

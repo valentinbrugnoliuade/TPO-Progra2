@@ -19,7 +19,9 @@ public class Sistema {
     public void agregarCliente(String nombre, int scoring) {
         Cliente cliente = new Cliente(nombre, scoring);
         repositorio.agregarCliente(cliente);
-        historial.registrarAccion(new Accion(TipoAccion.AGREGAR_CLIENTE, cliente.getNombre()));
+        Accion a = new Accion(TipoAccion.AGREGAR_CLIENTE, cliente.getNombre());
+        historial.registrarAccion(a);
+        cliente.registrarAccion(a);
     }
 
     /** Agrega un cliente con relaciones iniciales y registra la acción. Complejidad: O(n) donde n es la longitud del nombre */
@@ -28,7 +30,9 @@ public class Sistema {
         cliente.setSiguiendo(siguiendo);
         cliente.setConexiones(conexiones);
         repositorio.agregarCliente(cliente);
-        historial.registrarAccion(new Accion(TipoAccion.AGREGAR_CLIENTE, cliente.getNombre()));
+        Accion a = new Accion(TipoAccion.AGREGAR_CLIENTE, cliente.getNombre());
+        historial.registrarAccion(a);
+        cliente.registrarAccion(a);
     }
 
     /** Elimina un cliente por ID y registra la acción. Complejidad: O(n) donde n es la longitud del nombre */
@@ -36,7 +40,9 @@ public class Sistema {
         Cliente existente = repositorio.buscarPorId(id);
         boolean ok = repositorio.eliminarClientePorId(id);
         if (ok) {
-            historial.registrarAccion(new Accion(TipoAccion.ELIMINAR_CLIENTE, existente.getNombre()));
+            Accion a = new Accion(TipoAccion.ELIMINAR_CLIENTE, existente.getNombre());
+            historial.registrarAccion(a);
+            existente.registrarAccion(a);
         }
         return ok;
     }
@@ -93,14 +99,31 @@ public class Sistema {
     public void solicitarSeguimiento(String solicitante, String objetivo) {
         SolicitudSeguimiento s = new SolicitudSeguimiento(solicitante, objetivo);
         solicitudes.encolar(s);
-        historial.registrarAccion(new Accion(TipoAccion.SOLICITAR_SEGUIMIENTO, solicitante + " -> " + objetivo));
+        Cliente c = buscarCliente(solicitante);
+        if (c != null) {
+            c.encolarSolicitud(s);
+        }
+        Accion a = new Accion(TipoAccion.SOLICITAR_SEGUIMIENTO, solicitante + " -> " + objetivo);
+        historial.registrarAccion(a);
+        if (c != null) {
+            c.registrarAccion(a);
+        }
     }
 
     /** Procesa la siguiente solicitud en la cola (FIFO). Complejidad: O(1) */
     public SolicitudSeguimiento procesarSiguienteSolicitud() {
         SolicitudSeguimiento s = solicitudes.procesarSiguiente();
         if (s != null) {
-            historial.registrarAccion(new Accion(TipoAccion.PROCESAR_SOLICITUD, s.getSolicitante() + " -> " + s.getObjetivo()));
+            Cliente c = buscarCliente(s.getSolicitante());
+            if (c != null) {
+                // Mantener consistente la cola del cliente (FIFO por cliente)
+                c.procesarSiguienteSolicitud();
+            }
+            Accion a = new Accion(TipoAccion.PROCESAR_SOLICITUD, s.getSolicitante() + " -> " + s.getObjetivo());
+            historial.registrarAccion(a);
+            if (c != null) {
+                c.registrarAccion(a);
+            }
         }
         return s;
     }

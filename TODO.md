@@ -35,47 +35,52 @@ Checklist para dividir el trabajo en equipo.
   - [ ] Decisión: ¿permitir solicitudes duplicadas (mismo solicitante/objetivo repetido)?
 
 ## Persistencia con JSON
-- [WIP LUNA] **Modelo del JSON**:
-  - [ ] Definir mapeo de `clientes[]` con `nombre`, `scoring`, `siguiendo[]`, `conexiones[]`
-  - [ ] Decidir si `siguiendo` y `conexiones` se cargan en iteración 1 o se deja preparado
+- [DONE] **Modelo del JSON**:
+  - [x] Definir mapeo de `clientes[]` con `nombre`, `scoring`, `siguiendo[]`, `conexiones[]`
+  - [x] `siguiendo` y `conexiones` se cargan en iteración 1 (completado)
 
-- [WIP LUNA] **Lector/cargador JSON**:
-  - [ ] Leer archivo JSON desde ruta
-  - [ ] Crear clientes y cargarlos en estructuras
-  - [ ] (Si corresponde) Construir relaciones (`siguiendo`, `conexiones`)
+- [DONE] **Lector/cargador JSON**:
+  - [x] Leer archivo JSON desde ruta
+  - [x] Crear clientes y cargarlos en estructuras
+  - [x] Construir relaciones (`siguiendo`, `conexiones`)
 
-- [ TO DO ] **Validaciones y errores de carga**:
-  - [ ] Cliente duplicado (por nombre)
-  - [ ] Campos faltantes / nulos / vacíos
-  - [ ] Referencias a clientes inexistentes en listas
-  - [ ] JSON mal formado (manejo de excepción y mensaje claro)
+- [DONE] **Validaciones y errores de carga**:
+  - [x] Cliente duplicado (por nombre)
+  - [x] Campos faltantes / nulos / vacíos
+  - [x] Referencias a clientes inexistentes en listas
+  - [x] JSON mal formado (manejo de excepción y mensaje claro)
+  - [x] Validación de scoring (0-100)
 
 ## Integración / ejecución
 - [x] **Fachada o “Sistema”**:
   - [x] Unificar `RepositorioClientes`, `HistorialAcciones`, `GestorSolicitudes`
   - [x] Exponer operaciones “de alto nivel” (agregar/eliminar, registrar/deshacer, encolar/procesar)
 
-- [x] **`Main` / interfaz mínima**:
-  - [ ] Cargar JSON al inicio (o por comando)
+- [MOSTLY DONE] **`Main` / interfaz mínima**:
+  - [ ] Cargar JSON al inicio automáticamente (opcional - actualmente por menú)
   - [x] Ejecutar algunas operaciones para demostrar funcionamiento
 
 ## Tests (para dividir, no implementados acá)
-- [ ] **Pruebas unitarias**:
-  - [ ] Carga JSON (válido)
-  - [ ] Carga JSON (inválidos: duplicados, faltantes, referencias inválidas)
-  - [ ] Búsquedas por nombre / scoring
-  - [ ] Historial: registrar y deshacer (LIFO)
-  - [ ] Solicitudes: FIFO
+- [DONE] **Pruebas unitarias**:
+  - [x] Carga JSON (válido)
+  - [x] Carga JSON (inválidos: duplicados, faltantes, referencias inválidas)
+  - [x] Búsquedas por nombre / scoring
+  - [x] Historial: registrar y deshacer (LIFO)
+  - [x] Solicitudes: FIFO
+  - [x] Agregar cliente con relaciones
+  - [x] Casos borde (cliente inexistente, lista vacía, etc.)
 
-- [ ] **Datos de prueba**:
-  - [ ] JSON válido mínimo
-  - [ ] JSON con duplicados
-  - [ ] JSON con campos faltantes
-  - [ ] JSON con referencias a cliente inexistente
+- [DONE] **Datos de prueba**:
+  - [x] JSON válido mínimo (clientes.json en resources/)
+  - [x] Tests con JSON con duplicados  
+  - [x] Tests con campos faltantes / inválidos
+  - [x] Tests con referencias a cliente inexistente
 
 ## Entrega / prolijidad
-- [ ] **README**:
-  - [ ] Cómo ejecutar (Maven)
-  - [ ] Cómo correr tests
-  - [ ] Formato del JSON esperado
-  - [ ] Decisiones de diseño + complejidades (por qué Map/TreeMap, pila/cola, etc.)
+- [DONE] **README**:
+  - [x] Cómo ejecutar (Maven)
+  - [x] Cómo correr tests
+  - [x] Formato del JSON esperado
+  - [x] Decisiones de diseño + complejidades (por qué Map/TreeMap, pila/cola, etc.)
+  - [x] Ejemplos de uso
+  - [x] Solución de problemas
