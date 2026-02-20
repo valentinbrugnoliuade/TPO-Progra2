@@ -1,3 +1,6 @@
+import TDAs.avl.AvlImpl;
+import TDAs.avl.AvlTda;
+import TDAs.lista.ListaImpl;
 import TDAs.lista.ListaTda;
 
 /**
@@ -131,6 +134,119 @@ public class Sistema {
     /** Retorna la cantidad de solicitudes pendientes. Complejidad: O(1) */
     public int cantidadSolicitudesPendientes() {
         return solicitudes.cantidadPendientes();
+    }
+
+    // -------- Consultas de conexiones y seguidores --------
+
+    /**
+     * Retorna la lista de clientes a los que sigue el cliente indicado.
+     * Si no existe o no sigue a nadie, retorna lista vacía.
+     */
+    public ListaTda<String> consultarConexionesDe(String nombreCliente) {
+        ListaTda<String> out = new ListaImpl<>();
+        out.crearLista();
+
+        Cliente cliente = buscarCliente(nombreCliente);
+        if (cliente == null || cliente.getSiguiendo() == null) {
+            return out;
+        }
+
+        String[] siguiendo = cliente.getSiguiendo();
+        for (String seguido : siguiendo) {
+            if (seguido != null && !seguido.isBlank()) {
+                out.insertar(out.longitud(), seguido.trim());
+            }
+        }
+        return out;
+    }
+
+    /**
+     * Retorna los clientes ubicados en el nivel indicado del ABB/AVL
+     * ordenado por cantidad de seguidores.
+     * Convención de niveles: 1 = raíz.
+     */
+    public ListaTda<String> clientesEnNivelPorSeguidores(int nivel) {
+        ListaTda<String> out = new ListaImpl<>();
+        out.crearLista();
+
+        AvlTda<ClienteSeguidores> arbol = construirArbolSeguidores();
+        ListaTda<ClienteSeguidores> enNivel = arbol.elementosEnNivel(nivel);
+        for (int i = 0; i < enNivel.longitud(); i++) {
+            out.insertar(out.longitud(), enNivel.obtener(i).toString());
+        }
+        return out;
+    }
+
+    /** Atajo para la consigna: clientes en el cuarto nivel (nivel 4). */
+    public ListaTda<String> clientesEnCuartoNivelPorSeguidores() {
+        return clientesEnNivelPorSeguidores(4);
+    }
+
+    /** Retorna el cliente con más seguidores en formato legible; null si no hay clientes. */
+    public String clienteConMasSeguidores() {
+        AvlTda<ClienteSeguidores> arbol = construirArbolSeguidores();
+        ClienteSeguidores mayor = arbol.mayor();
+        return mayor == null ? null : mayor.toString();
+    }
+
+    private AvlTda<ClienteSeguidores> construirArbolSeguidores() {
+        AvlTda<ClienteSeguidores> arbol = new AvlImpl<>();
+        arbol.crearArbol();
+
+        ListaTda<Cliente> clientes = listarClientes();
+        for (int i = 0; i < clientes.longitud(); i++) {
+            Cliente c = clientes.obtener(i);
+            int seguidores = contarSeguidoresDe(c.getNombre());
+            arbol.insertar(new ClienteSeguidores(c.getId(), c.getNombre(), seguidores));
+        }
+        return arbol;
+    }
+
+    private int contarSeguidoresDe(String nombreObjetivo) {
+        if (nombreObjetivo == null || nombreObjetivo.isBlank()) return 0;
+        int total = 0;
+        ListaTda<Cliente> clientes = listarClientes();
+        for (int i = 0; i < clientes.longitud(); i++) {
+            Cliente c = clientes.obtener(i);
+            String[] siguiendo = c.getSiguiendo();
+            if (siguiendo == null) continue;
+            for (String seguido : siguiendo) {
+                if (seguido != null && seguido.trim().equalsIgnoreCase(nombreObjetivo.trim())) {
+                    total++;
+                }
+            }
+        }
+        return total;
+    }
+
+    private static class ClienteSeguidores implements Comparable<ClienteSeguidores> {
+        private final int id;
+        private final String nombre;
+        private final int seguidores;
+
+        private ClienteSeguidores(int id, String nombre, int seguidores) {
+            this.id = id;
+            this.nombre = nombre;
+            this.seguidores = seguidores;
+        }
+
+        @Override
+        public int compareTo(ClienteSeguidores otro) {
+            int cmpSeguidores = Integer.compare(this.seguidores, otro.seguidores);
+            if (cmpSeguidores != 0) return cmpSeguidores;
+
+            String esteNombre = this.nombre == null ? "" : this.nombre;
+            String otroNombre = otro.nombre == null ? "" : otro.nombre;
+            int cmpNombre = esteNombre.compareToIgnoreCase(otroNombre);
+            if (cmpNombre != 0) return cmpNombre;
+
+            return Integer.compare(this.id, otro.id);
+        }
+
+        @Override
+        public String toString() {
+            return nombre + " (seguidores=" + seguidores + ")";
+        }
     }
 }
 

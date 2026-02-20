@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.Scanner;
+
 import TDAs.lista.ListaTda;
 
 /**
@@ -47,6 +48,8 @@ public class Main {
         System.out.println("│  7.  Ver historial de acciones                                 │");
         System.out.println("│  8.  Cargar clientes desde JSON                                │");
         System.out.println("│  9.  Guardar clientes a JSON                                   │");
+        System.out.println("│ 10.  Consultar conexiones (a quién sigue)                      │");
+        System.out.println("│ 11.  Ver 4° nivel ABB por seguidores                           │");
         System.out.println("│  0.  Salir                                                     │");
         System.out.println("└────────────────────────────────────────────────────────────────┘");
     }
@@ -80,6 +83,12 @@ public class Main {
                 break;
             case 9:
                 guardarAJSON();
+                break;
+            case 10:
+                consultarConexionesInteractivo();
+                break;
+            case 11:
+                mostrarCuartoNivelSeguidores();
                 break;
             case 0:
                 System.out.println("\n[OK] Opcion valida: Salir");
@@ -304,6 +313,47 @@ public class Main {
             }
         } catch (Exception e) {
             System.out.println("[ERROR] No se pudo guardar los clientes: " + e.getMessage());
+        }
+        System.out.println();
+    }
+
+    /** Consulta a quién sigue un cliente. Complejidad: O(k) donde k es la cantidad de seguidos del cliente */
+    private static void consultarConexionesInteractivo() {
+        System.out.println("\n┌─ CONSULTAR CONEXIONES ─┐");
+        System.out.print("Nombre del cliente: ");
+        String nombre = sc.nextLine();
+
+        ListaTda<String> seguidos = sistema.consultarConexionesDe(nombre);
+        if (seguidos.longitud() == 0) {
+            System.out.println("[INFO] El cliente no existe o no sigue a nadie.");
+        } else {
+            System.out.println("[OK] Sigue a " + seguidos.longitud() + " cliente(s):");
+            for (int i = 0; i < seguidos.longitud(); i++) {
+                System.out.println("   - " + seguidos.obtener(i));
+            }
+        }
+        System.out.println();
+    }
+
+    /** Muestra clientes del cuarto nivel del ABB/AVL por seguidores y el máximo global. */
+    private static void mostrarCuartoNivelSeguidores() {
+        System.out.println("\n┌─ 4° NIVEL ABB POR SEGUIDORES ─┐");
+        ListaTda<String> cuartoNivel = sistema.clientesEnCuartoNivelPorSeguidores();
+
+        if (cuartoNivel.longitud() == 0) {
+            System.out.println("[INFO] No hay clientes en el cuarto nivel (faltan nodos en el árbol).");
+        } else {
+            System.out.println("[OK] Clientes en nivel 4:");
+            for (int i = 0; i < cuartoNivel.longitud(); i++) {
+                System.out.println("   - " + cuartoNivel.obtener(i));
+            }
+        }
+
+        String mayor = sistema.clienteConMasSeguidores();
+        if (mayor != null) {
+            System.out.println("[OK] Cliente con más seguidores: " + mayor);
+        } else {
+            System.out.println("[INFO] No hay clientes cargados para calcular seguidores.");
         }
         System.out.println();
     }

@@ -1,7 +1,10 @@
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.DisplayName;
-import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.api.Test;
 
 import TDAs.lista.ListaTda;
 
@@ -110,6 +113,49 @@ public class SistemaTest {
         Cliente alice = sistema.buscarClientePorId(1);
         assertNotNull(alice.getConexiones(), "Debe tener conexiones");
         assertEquals(3, alice.getConexiones().length, "Debe tener 3 conexiones");
+    }
+
+    @Test
+    @DisplayName("Consultar conexiones (a quién sigue) de un cliente")
+    public void testConsultarConexionesDeCliente() {
+        sistema.agregarCliente("A", 90, new String[]{"B", "C"}, null);
+        sistema.agregarCliente("B", 85);
+        sistema.agregarCliente("C", 88);
+
+        ListaTda<String> seguidos = sistema.consultarConexionesDe("A");
+        assertEquals(2, seguidos.longitud(), "A debe seguir a 2 clientes");
+        assertEquals("B", seguidos.obtener(0), "El primer seguido debe ser B");
+        assertEquals("C", seguidos.obtener(1), "El segundo seguido debe ser C");
+    }
+
+    @Test
+    @DisplayName("Cliente con más seguidores usando ABB/AVL")
+    public void testClienteConMasSeguidores() {
+        sistema.agregarCliente("A", 90, new String[]{"B", "C"}, null);
+        sistema.agregarCliente("B", 85);
+        sistema.agregarCliente("C", 88);
+        sistema.agregarCliente("D", 70, new String[]{"B"}, null);
+
+        String mayor = sistema.clienteConMasSeguidores();
+        assertNotNull(mayor, "Debe existir cliente con más seguidores");
+        assertTrue(mayor.contains("B"), "El cliente con más seguidores debe ser B");
+        assertTrue(mayor.contains("seguidores=2"), "B debe tener 2 seguidores");
+    }
+
+    @Test
+    @DisplayName("Obtener clientes en cuarto nivel del ABB/AVL por seguidores")
+    public void testClientesEnCuartoNivelPorSeguidores() {
+        sistema.agregarCliente("A", 90);
+        sistema.agregarCliente("B", 90);
+        sistema.agregarCliente("C", 90);
+        sistema.agregarCliente("D", 90);
+        sistema.agregarCliente("E", 90);
+        sistema.agregarCliente("F", 90);
+        sistema.agregarCliente("G", 90);
+        sistema.agregarCliente("H", 90);
+
+        ListaTda<String> cuartoNivel = sistema.clientesEnCuartoNivelPorSeguidores();
+        assertTrue(cuartoNivel.longitud() > 0, "Con 8 nodos debe existir al menos un cliente en nivel 4");
     }
     
     // ========== Tests de Historial ==========

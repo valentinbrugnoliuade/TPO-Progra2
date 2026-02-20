@@ -105,6 +105,15 @@ public class AvlImpl<T extends Comparable<T>> implements AvlTda<T> {
     }
 
     @Override
+    public ListaTda<T> elementosEnNivel(int nivel) {
+        ListaTda<T> out = nuevaLista();
+        if (!creado || raiz == null) return out;
+        if (nivel <= 0) return out;
+        elementosEnNivelRec(raiz, 1, nivel, out);
+        return out;
+    }
+
+    @Override
     public T mayor() {
         if (!creado || raiz == null) return null;
         Nodo<T> act = raiz;
@@ -260,6 +269,16 @@ public class AvlImpl<T extends Comparable<T>> implements AvlTda<T> {
         System.out.println("- " + n.valor + " (h=" + (n.altura - 1) + ", fb=" + factorBalance(n) + ")");
         imprimirRec(n.izq, nivel + 1);
         imprimirRec(n.der, nivel + 1);
+    }
+
+    private void elementosEnNivelRec(Nodo<T> n, int nivelActual, int nivelObjetivo, ListaTda<T> out) {
+        if (n == null) return;
+        if (nivelActual == nivelObjetivo) {
+            out.insertar(out.longitud(), n.valor);
+            return;
+        }
+        elementosEnNivelRec(n.izq, nivelActual + 1, nivelObjetivo, out);
+        elementosEnNivelRec(n.der, nivelActual + 1, nivelObjetivo, out);
     }
 
     private void mayoresRec(Nodo<T> n, T raizValor, ListaTda<T> out) {

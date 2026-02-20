@@ -46,6 +46,15 @@ public interface AvlTda<T extends Comparable<T>> {
     /** Imprime el árbol en consola en formato jerárquico (con sangría). Complejidad: O(n) */
     void imprimirArbol();
 
+    /**
+     * Devuelve los elementos ubicados exactamente en el nivel indicado.
+     * Convención de nivel:
+     * - nivel 1: raíz
+     * - nivel 2: hijos de la raíz
+     * Complejidad: O(n)
+     */
+    ListaTda<T> elementosEnNivel(int nivel);
+
     // --- Ejercicios (Clase 12) ---
 
     /** Obtiene el elemento mayor del árbol (máximo). Retorna null si está vacío. Complejidad: O(log n) */
