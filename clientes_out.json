@@ -1,6 +1,21 @@
 {
   "Clientes": [
     {
+      "id": 6,
+      "nombre": "Charlie",
+      "scoring": 97,
+      "siguiendo": [
+        "Alice",
+        "Bob"
+      ],
+      "conexiones": [
+        "Alice"
+      ],
+      "solicitudes": {},
+      "acciones": {}
+    },
+    {
+      "id": 4,
       "nombre": "Alice",
       "scoring": 95,
       "siguiendo": [
@@ -9,11 +24,27 @@
       ],
       "conexiones": [
         "Bob",
-        "Charlie",
-        "David"
-      ]
+        "Charlie"
+      ],
+      "solicitudes": {},
+      "acciones": {}
     },
     {
+      "id": 7,
+      "nombre": "Regulo",
+      "scoring": 88,
+      "siguiendo": [
+        "Bob",
+        "Charlie"
+      ],
+      "conexiones": [
+        "Bob"
+      ],
+      "solicitudes": {},
+      "acciones": {}
+    },
+    {
+      "id": 5,
       "nombre": "Bob",
       "scoring": 80,
       "siguiendo": [
@@ -22,17 +53,9 @@
       "conexiones": [
         "Alice",
         "Charlie"
-      ]
-    },
-    {
-      "nombre": "R",
-      "scoring": 30,
-      "siguiendo": [
-        "L"
       ],
-      "conexiones": [
-        "M"
-      ]
+      "solicitudes": {},
+      "acciones": {}
     }
   ]
 }

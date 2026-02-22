@@ -10,7 +10,11 @@ public class Sistema {
     private final RepositorioClientes repositorio = new RepositorioClientes();
     private final HistorialAcciones historial = new HistorialAcciones();
     private final GestorSolicitudes solicitudes = new GestorSolicitudes();
-
+    private AvlTda<Cliente> arbolClientes;
+    public Sistema(){
+        arbolClientes = new AvlImpl<>();
+        arbolClientes.crearArbol();
+    }
     // -------- Clientes --------
     
     /** Verifica si existe un cliente con el nombre dado. Complejidad: O(n) donde n es la longitud del nombre */
@@ -30,9 +34,13 @@ public class Sistema {
     /** Agrega un cliente con relaciones iniciales y registra la acción. Complejidad: O(n) donde n es la longitud del nombre */
     public void agregarCliente(String nombre, int scoring, String[] siguiendo, String[] conexiones) {
         Cliente cliente = new Cliente(nombre, scoring);
+        if (siguiendo != null && siguiendo.length > 2) {
+            throw new IllegalArgumentException("Un cliente solo puede seguir hasta 2 clientes.");
+        }
         cliente.setSiguiendo(siguiendo);
         cliente.setConexiones(conexiones);
         repositorio.agregarCliente(cliente);
+        arbolClientes.insertar(cliente);
         Accion a = new Accion(TipoAccion.AGREGAR_CLIENTE, cliente.getNombre());
         historial.registrarAccion(a);
         cliente.registrarAccion(a);
@@ -76,7 +84,7 @@ public class Sistema {
 
     /** Lista todos los clientes. Complejidad: O(n) donde n es el total de clientes */
     public ListaTda<Cliente> listarClientes() {
-        return repositorio.listarTodos();
+        return arbolClientes.inorden();
     }
 
     /** Retorna la cantidad total de clientes. Complejidad: O(1) */

@@ -14,7 +14,7 @@
     },
     {
       "nombre": "Charlie",
-      "scoring": 80,
+      "scoring": 97,
       "siguiendo": ["Alice", "Bob"],
       "conexiones": ["Alice"]
     }
