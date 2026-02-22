@@ -1,5 +1,5 @@
 import java.util.Objects;
-
+import java.lang.Comparable;
 import TDAs.cola.ColaImpl;
 import TDAs.cola.ColaTda;
 import TDAs.cliente.ClienteTda;
@@ -8,7 +8,7 @@ import TDAs.deque.DequeTda;
 import TDAs.lista.ListaImpl;
 import TDAs.lista.ListaTda;
 
-public class Cliente implements ClienteTda<SolicitudSeguimiento, Accion> {
+public class Cliente implements ClienteTda<SolicitudSeguimiento, Accion>, Comparable<Cliente> {
     private static int idCounter = 1;
     
     private int id;
@@ -29,7 +29,19 @@ public class Cliente implements ClienteTda<SolicitudSeguimiento, Accion> {
         this.acciones = new DequeImpl<>();
         this.acciones.crearDeque();
     }
-    
+    /** Ordenar por scoring**/
+    @Override
+    public int compareTo(Cliente otro) {
+        // 1️⃣ Orden por scoring (mayor primero)
+        int cmp = Integer.compare(otro.getScoring(), this.getScoring());
+
+        if (cmp != 0) {
+            return cmp;
+        }
+
+        // 2️⃣ Si tienen mismo scoring, desempatar por nombre
+        return this.getNombre().compareTo(otro.getNombre());
+    }
     /** Constructor con validación. Complejidad: O(1) */
     public Cliente(String nombre, int scoring) {
         if (nombre == null || nombre.isBlank()) {
