@@ -1,5 +1,8 @@
 import TDAs.avl.AvlImpl;
 import TDAs.avl.AvlTda;
+import TDAs.grafo.grafoBFS;
+import TDAs.grafo.grafoImpl;
+import TDAs.grafo.grafoTDA;
 import TDAs.lista.ListaImpl;
 import TDAs.lista.ListaTda;
 
@@ -11,9 +14,13 @@ public class Sistema {
     private final HistorialAcciones historial = new HistorialAcciones();
     private final GestorSolicitudes solicitudes = new GestorSolicitudes();
     private AvlTda<Cliente> arbolClientes;
+    private final grafoTDA<String> grafoConexiones;
+
     public Sistema(){
         arbolClientes = new AvlImpl<>();
         arbolClientes.crearArbol();
+        grafoConexiones = new grafoImpl<>();
+        grafoConexiones.crearGrafo();
     }
     // -------- Clientes --------
     
@@ -26,6 +33,8 @@ public class Sistema {
     public void agregarCliente(String nombre, int scoring) {
         Cliente cliente = new Cliente(nombre, scoring);
         repositorio.agregarCliente(cliente);
+        arbolClientes.insertar(cliente);
+        grafoConexiones.agregarVertice(cliente.getNombre());
         Accion a = new Accion(TipoAccion.AGREGAR_CLIENTE, cliente.getNombre());
         historial.registrarAccion(a);
         cliente.registrarAccion(a);
@@ -41,6 +50,7 @@ public class Sistema {
         cliente.setConexiones(conexiones);
         repositorio.agregarCliente(cliente);
         arbolClientes.insertar(cliente);
+        grafoConexiones.agregarVertice(cliente.getNombre());
         Accion a = new Accion(TipoAccion.AGREGAR_CLIENTE, cliente.getNombre());
         historial.registrarAccion(a);
         cliente.registrarAccion(a);
@@ -225,6 +235,35 @@ public class Sistema {
             }
         }
         return total;
+    }
+
+    // -------- Distancia entre clientes (grafo de conexiones) --------
+
+    /**
+     * Calcula la distancia (saltos) entre dos clientes usando BFS sobre el grafo de conexiones.
+     * Retorna 0 si son el mismo cliente, -1 si no hay camino o alguno no existe.
+     * Complejidad: O(V + E)
+     */
+    public int distanciaEntre(String nombre1, String nombre2) {
+        reconstruirAristas();
+        return grafoBFS.distancia(grafoConexiones, nombre1.trim(), nombre2.trim());
+    }
+
+    /** Recorre todos los clientes y agrega sus conexiones como aristas al grafo. Complejidad: O(V + E) */
+    private void reconstruirAristas() {
+        ListaTda<Cliente> todos = listarClientes();
+        for (int i = 0; i < todos.longitud(); i++) {
+            Cliente c = todos.obtener(i);
+            String[] conexiones = c.getConexiones();
+            if (conexiones == null) continue;
+            for (String conexion : conexiones) {
+                if (conexion == null || conexion.isBlank()) continue;
+                String destino = conexion.trim();
+                if (grafoConexiones.existeVertice(destino)) {
+                    grafoConexiones.agregarArista(c.getNombre(), destino);
+                }
+            }
+        }
     }
 
     private static class ClienteSeguidores implements Comparable<ClienteSeguidores> {

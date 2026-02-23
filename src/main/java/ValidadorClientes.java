@@ -31,7 +31,7 @@ public class ValidadorClientes {
                 throw new IllegalArgumentException("Cliente duplicado encontrado: '" + nombre + "'");
             }
             nombresVistos.add(nombre.toLowerCase());
-            nombresClientes.add(nombre);
+            nombresClientes.add(nombre.toLowerCase().trim());
 
             int scoring = cliente.getScoring();
             if (scoring < 0 || scoring > 100) {
@@ -52,9 +52,9 @@ public class ValidadorClientes {
                             "Cliente '" + nombre + "' tiene referencia vacía en 'siguiendo'."
                         );
                     }
-                    if (!nombresClientes.contains(seguido)) {
+                    if (!nombresClientes.contains(seguido.toLowerCase().trim())) {
                         throw new IllegalArgumentException(
-                            "Cliente '" + nombre + "' sigue a '" + seguido + 
+                            "Cliente '" + nombre + "' sigue a '" + seguido +
                             "' pero este cliente no existe."
                         );
                     }
@@ -68,9 +68,9 @@ public class ValidadorClientes {
                             "Cliente '" + nombre + "' tiene referencia vacía en 'conexiones'."
                         );
                     }
-                    if (!nombresClientes.contains(conexion)) {
+                    if (!nombresClientes.contains(conexion.toLowerCase().trim())) {
                         throw new IllegalArgumentException(
-                            "Cliente '" + nombre + "' está conectado con '" + conexion + 
+                            "Cliente '" + nombre + "' está conectado con '" + conexion +
                             "' pero este cliente no existe."
                         );
                     }

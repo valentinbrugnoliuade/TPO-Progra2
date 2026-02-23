@@ -50,6 +50,7 @@ public class Main {
         System.out.println("│  9.  Guardar clientes a JSON                                   │");
         System.out.println("│ 10.  Consultar conexiones (a quién sigue)                      │");
         System.out.println("│ 11.  Ver 4° nivel ABB por seguidores                           │");
+        System.out.println("│ 12.  Calcular distancia entre dos clientes                     │");
         System.out.println("│  0.  Salir                                                     │");
         System.out.println("└────────────────────────────────────────────────────────────────┘");
     }
@@ -89,6 +90,9 @@ public class Main {
                 break;
             case 11:
                 mostrarCuartoNivelSeguidores();
+                break;
+            case 12:
+                calcularDistanciaInteractivo();
                 break;
             case 0:
                 System.out.println("\n[OK] Opcion valida: Salir");
@@ -331,6 +335,23 @@ public class Main {
             for (int i = 0; i < seguidos.longitud(); i++) {
                 System.out.println("   - " + seguidos.obtener(i));
             }
+        }
+        System.out.println();
+    }
+
+    /** Calcula la distancia (saltos) entre dos clientes usando BFS sobre el grafo de conexiones. */
+    private static void calcularDistanciaInteractivo() {
+        System.out.println("\n┌─ DISTANCIA ENTRE CLIENTES ─┐");
+        System.out.print("Nombre del primer cliente: ");
+        String nombre1 = sc.nextLine().trim();
+        System.out.print("Nombre del segundo cliente: ");
+        String nombre2 = sc.nextLine().trim();
+
+        int distancia = sistema.distanciaEntre(nombre1, nombre2);
+        if (distancia == -1) {
+            System.out.println("[INFO] No existe camino entre '" + nombre1 + "' y '" + nombre2 + "' (o alguno no existe).");
+        } else {
+            System.out.println("[OK] Distancia entre '" + nombre1 + "' y '" + nombre2 + "': " + distancia + " salto(s).");
         }
         System.out.println();
     }
