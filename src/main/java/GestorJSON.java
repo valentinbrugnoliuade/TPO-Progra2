@@ -39,10 +39,15 @@ public class GestorJSON {
 
         /** Guarda los datos en clientes_out.json. Complejidad: O(n) donde n es el número de clientes */
         public void guardar(ClientesData data) {
-            try (FileWriter writer = new FileWriter("clientes_out.json")) {
+            guardar(data, "clientes_out.json");
+        }
+
+        /** Guarda los datos en la ruta especificada. Complejidad: O(n) donde n es el número de clientes */
+        public void guardar(ClientesData data, String ruta) {
+            try (FileWriter writer = new FileWriter(ruta)) {
                 gsonEscritura.toJson(data, writer);
             } catch (IOException e) {
-                throw new RuntimeException("Error al guardar JSON", e);
+                throw new RuntimeException("Error al guardar JSON en " + ruta, e);
             }
         }
 
