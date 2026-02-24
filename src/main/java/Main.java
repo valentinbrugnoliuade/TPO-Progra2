@@ -51,6 +51,7 @@ public class Main {
         System.out.println("│ 10.  Consultar conexiones (a quién sigue)                      │");
         System.out.println("│ 11.  Ver 4° nivel ABB por seguidores                           │");
         System.out.println("│ 12.  Calcular distancia entre dos clientes                     │");
+        System.out.println("│ 13.  Obtener vecinos (relaciones generales)                    │");
         System.out.println("│  0.  Salir                                                     │");
         System.out.println("└────────────────────────────────────────────────────────────────┘");
     }
@@ -93,6 +94,9 @@ public class Main {
                 break;
             case 12:
                 calcularDistanciaInteractivo();
+                break;
+            case 13:
+                consultarVecinosInteractivo();
                 break;
             case 0:
                 System.out.println("\n[OK] Opcion valida: Salir");
@@ -352,6 +356,24 @@ public class Main {
             System.out.println("[INFO] No existe camino entre '" + nombre1 + "' y '" + nombre2 + "' (o alguno no existe).");
         } else {
             System.out.println("[OK] Distancia entre '" + nombre1 + "' y '" + nombre2 + "': " + distancia + " salto(s).");
+        }
+        System.out.println();
+    }
+
+    /** Consulta los vecinos (clientes relacionados) de un cliente en el grafo de conexiones. */
+    private static void consultarVecinosInteractivo() {
+        System.out.println("\n┌─ CONSULTAR VECINOS ─┐");
+        System.out.print("Nombre del cliente: ");
+        String nombre = sc.nextLine();
+
+        ListaTda<String> vecinos = sistema.obtenerVecinosDe(nombre);
+        if (vecinos.longitud() == 0) {
+            System.out.println("[INFO] El cliente no existe o no tiene vecinos.");
+        } else {
+            System.out.println("[OK] Vecinos encontrados: " + vecinos.longitud());
+            for (int i = 0; i < vecinos.longitud(); i++) {
+                System.out.println("   - " + vecinos.obtener(i));
+            }
         }
         System.out.println();
     }

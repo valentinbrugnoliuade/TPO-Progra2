@@ -249,6 +249,32 @@ public class Sistema {
         return grafoBFS.distancia(grafoConexiones, nombre1.trim(), nombre2.trim());
     }
 
+    /**
+     * Retorna los vecinos (clientes relacionados) de un cliente en el grafo de conexiones.
+     * Si el cliente no existe o no tiene vecinos, retorna lista vacía.
+     * Complejidad: O(grado(v))
+     */
+    public ListaTda<String> obtenerVecinosDe(String nombreCliente) {
+        ListaTda<String> out = new ListaImpl<>();
+        out.crearLista();
+
+        if (nombreCliente == null || nombreCliente.isBlank()) {
+            return out;
+        }
+
+        String nombre = nombreCliente.trim();
+        if (!grafoConexiones.existeVertice(nombre)) {
+            return out;
+        }
+
+        reconstruirAristas();
+        ListaTda<String> vecinos = grafoConexiones.obtenerVecinos(nombre);
+        for (int i = 0; i < vecinos.longitud(); i++) {
+            out.insertar(out.longitud(), vecinos.obtener(i));
+        }
+        return out;
+    }
+
     /** Recorre todos los clientes y agrega sus conexiones como aristas al grafo. Complejidad: O(V + E) */
     private void reconstruirAristas() {
         ListaTda<Cliente> todos = listarClientes();
