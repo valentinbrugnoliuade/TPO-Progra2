@@ -1,0 +1,34 @@
+{
+  "Clientes": [
+    {
+      "nombre": "Alice",
+      "scoring": 95,
+      "siguiendo": ["Bob", "Charlie"],
+      "conexiones": ["Bob", "Charlie"]
+    },
+    {
+      "nombre": "Bob",
+      "scoring": 80,
+      "siguiendo": ["Alice"],
+      "conexiones": ["Alice", "Charlie"]
+    },
+    {
+      "nombre": "Charlie",
+      "scoring": 97,
+      "siguiendo": ["Alice", "Bob"],
+      "conexiones": ["Alice", "Bob"]
+    },
+    {
+      "nombre": "Diana",
+      "scoring": 60,
+      "siguiendo": ["Alice"],
+      "conexiones": ["Bob"]
+    },
+    {
+      "nombre": "Eduardo",
+      "scoring": 45,
+      "siguiendo": [],
+      "conexiones": []
+    }
+  ]
+}

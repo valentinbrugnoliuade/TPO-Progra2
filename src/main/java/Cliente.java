@@ -1,8 +1,8 @@
 import java.util.Objects;
-import java.lang.Comparable;
+
+import TDAs.cliente.ClienteTda;
 import TDAs.cola.ColaImpl;
 import TDAs.cola.ColaTda;
-import TDAs.cliente.ClienteTda;
 import TDAs.deque.DequeImpl;
 import TDAs.deque.DequeTda;
 import TDAs.lista.ListaImpl;
@@ -17,9 +17,9 @@ public class Cliente implements ClienteTda<SolicitudSeguimiento, Accion>, Compar
     private String[] siguiendo;
     private String[] conexiones;
 
-    // Estructuras internas (TDAs) por cliente
-    private final ColaTda<SolicitudSeguimiento> solicitudes;
-    private final DequeTda<Accion> acciones;
+    // Estructuras internas (TDAs) por cliente — transient para que Gson las ignore al serializar
+    private transient final ColaTda<SolicitudSeguimiento> solicitudes;
+    private transient final DequeTda<Accion> acciones;
 
     /** Constructor vacío para deserialización JSON. Complejidad: O(1) */
     public Cliente(){
