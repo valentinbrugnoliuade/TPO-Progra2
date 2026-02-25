@@ -61,6 +61,10 @@ public class Sistema {
         Cliente existente = repositorio.buscarPorId(id);
         boolean ok = repositorio.eliminarClientePorId(id);
         if (ok) {
+            arbolClientes.eliminar(existente);
+            if (existente != null && existente.getNombre() != null) {
+                grafoConexiones.eliminarVertice(existente.getNombre());
+            }
             Accion a = new Accion(TipoAccion.ELIMINAR_CLIENTE, existente.getNombre());
             historial.registrarAccion(a);
             existente.registrarAccion(a);

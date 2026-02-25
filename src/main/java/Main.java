@@ -14,7 +14,7 @@ public class Main {
     /** Metodo principal del programa. Complejidad: O(n*m) donde n es el numero de operaciones y m es la complejidad de cada operacion */
     public static void main(String[] args) {
         System.out.println("╔════════════════════════════════════════════════════════════════╗");
-        System.out.println("║       SISTEMA DE GESTIÓN DE CLIENTES                           ║");
+        System.out.println("║                   RED SOCIAL CLIENTES                          ║");
         System.out.println("╚════════════════════════════════════════════════════════════════╝\n");
 
         int opcion;
@@ -37,7 +37,7 @@ public class Main {
     /** Muestra el menu de opciones. Complejidad: O(1) */
     private static void mostrarMenu() {
         System.out.println("┌────────────────────────────────────────────────────────────────┐");
-        System.out.println("│                       MENÚ PRINCIPAL                           │");
+        System.out.println("│                       MENU PRINCIPAL                           │");
         System.out.println("├────────────────────────────────────────────────────────────────┤");
         System.out.println("│  1.  Agregar cliente                                           │");
         System.out.println("│  2.  Buscar cliente por nombre                                 │");
